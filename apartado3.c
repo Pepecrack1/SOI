@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
     /* Declara las variables necesarias*/
     pid_t padre, hijo;
 
-    if (signal(SIGUSR1, gestion) == SIG_ERR) printf("Error al crear gestor 1\n");
+    if (signal(SIGUSR1, gestion) == SIG_ERR) printf("Error al crear gestor 1\n");73
     if (signal(SIGUSR2, gestion) == SIG_ERR) printf("Error al crear gestor 2\n");
     sleep(2);
     padre = getpid();

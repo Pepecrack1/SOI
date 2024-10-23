@@ -32,6 +32,7 @@ int main(int argc, char **argv)
     int status1;
     pid_t pid2;
     int status2;
+    pid_t pid_padre=getpid();
     
     sigset_t set, pending;  //Declaramos sigsets para las señales a bloquear y las señales pendientes
     sigemptyset(&set);         //Creamos un set vacio, para las señales que vamos a bloquear
@@ -66,11 +67,11 @@ int main(int argc, char **argv)
     }
     else if(pid1==0)  //Es el hijo 1------------------------
     {   
-        kill(getppid(),SIGUSR1);  //Envía SIGUSR1 al padre
+        kill(pid_padre,SIGUSR1);  //Envía SIGUSR1 al padre
         printf("Hijo1| Envía SIGUSR1 y pasa a dormir 20s|");
         mostrarHora();
         sleep(20);
-        kill(getppid(),SIGUSR2);  //Envía SIGUSR2 al padre
+        kill(pid_padre,SIGUSR2);  //Envía SIGUSR2 al padre
         printf("Hijo1| Envía SIGUSR2 y pasa a dormir 20s|");
         mostrarHora();
         sleep(20);
@@ -102,8 +103,6 @@ int main(int argc, char **argv)
     mostrarHora();
     sleep(30);  //Espera 30 segundos, para que le de tiempo a llegar a SIGUSR1 y despues SIGUSR2
     
-    printf("Padre| Comprueba si SIGUSR1 está pendiente|");
-    mostrarHora();
     if(sigpending(&pending)<0)  //Obtenemos lista de señales pendientes
     {
         perror("Error al comprobar señales pendientes\n");
@@ -111,9 +110,11 @@ int main(int argc, char **argv)
     }
     
     if (sigismember(&pending, SIGUSR1)) {
-        printf("SIGUSR1 está pendiente\n");
+        printf("Padre| SIGUSR1 está pendiente ");
+        mostrarHora();
     } else {
-        printf("SIGUSR1 no está pendiente\n");
+        printf("Padre| SIGUSR1 no está pendiente ");
+        mostrarHora();
     }
     
     if (sigprocmask(SIG_UNBLOCK, &set, NULL) < 0) {  //Desbloqueamos las señales del set (SIGUSR1) nada más despertarse el padre
@@ -126,7 +127,8 @@ int main(int argc, char **argv)
     
     waitpid(pid1, &status1, 0);   //Esperamos al hijo1
     int exit_code = WEXITSTATUS(status1);
-    printf("Salida del primer hijo: %d\n", exit_code);  //La salida es el codigo de salida del primer hijo
+    printf("Padre| Salida del primer hijo: %d ", exit_code);  //La salida es el codigo de salida del primer hijo
+    mostrarHora();
     
     return(EXIT_SUCCESS);
 }
@@ -137,10 +139,12 @@ static void gestion(int numero_de_senhal)   //Manejador
     switch (numero_de_senhal)   //En funcion del numero de señal hariamos una cosa u otra
     {
         case SIGUSR1:
-            printf("SIGUSR1 recibida.\n");
+            printf("Padre| SIGUSR1 recibida| ");
+            mostrarHora();
             break;
         case SIGUSR2:
-            printf("SIGUSR2 recibida.\n");
+            printf("Padre| SIGUSR2 recibida| ");
+            mostrarHora();
             break;
       }
 }
