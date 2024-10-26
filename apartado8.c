@@ -110,7 +110,7 @@ int main(int argc, char **argv)
     int posicionM;
     
     
-    while(puntosJ<10&&puntosM<10)
+    while( (puntosJ<11&&puntosM<11) || (puntosJ-puntosM)<2 || (puntosM-puntosJ)<2 )
     {
         int puntoTerminado=0;
         turno=rand() % 2;   //Escogemos de forma aleatoria quien tiene el turno
@@ -172,7 +172,7 @@ int main(int argc, char **argv)
                 }
                 else
                 {
-                    puntosJ+=1;int c;
+                    puntosJ+=1;
                     puntoTerminado=1;
                     printf("\nPunto para el jugador\n\n");
                     printf("===================================\n\n");
@@ -183,11 +183,11 @@ int main(int argc, char **argv)
         }
     }
     printf("\nPARTIDA TERMINADA\n");
-    if(puntosJ==10)
+    if(puntosM < puntosJ)
     {
-        printf("Gana el jugador: 10 - %d , bien jugado!\n",puntosM);
+        printf("Gana el jugador: %d - %d , bien jugado!\n",puntosJ, puntosM);
     }
-    else printf("Gana la máquina: 10 - %d\n , mala suerte!\n",puntosJ);
+    else printf("Gana la máquina: %d - %d\n , mala suerte!\n",puntosJ, puntosM);
     
     return (EXIT_SUCCESS);
 }
@@ -284,7 +284,7 @@ static void gestionHijos(int numero_de_senhal)  //Manejador, NO PUEDE HACER RETU
                 printf("Introduce la posicion a la que quieres lanzar: ");
                 scanf(" %d", &posicionB);
                 printf(" %d\n", posicionB);
-            }while(posicionJ<0||posicionJ>9);
+            }while(posicionB<0||posicionB>9);
             
             moverJugador(&posicionJ);
             moverMaquina(&posicionM);

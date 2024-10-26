@@ -1,1 +1,1 @@
-Maquina: 4 | Jugador: 6 | Bola: 9 | Turno: 1 | PuntosJ: 1 | PuntosM: 0
+Maquina: 9 | Jugador: 5 | Bola: 4 | Turno: 0 | PuntosJ: 0 | PuntosM: 0
