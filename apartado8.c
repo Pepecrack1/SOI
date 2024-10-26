@@ -109,8 +109,8 @@ int main(int argc, char **argv)
     int posicionB;
     int posicionM;
     
-    
-    while( (puntosJ<11&&puntosM<11) || (puntosJ-puntosM)<2 || (puntosM-puntosJ)<2 )
+     
+    while( (puntosJ<11&&puntosM<11) || abs(puntosJ-puntosM) < 2 )
     {
         int puntoTerminado=0;
         turno=rand() % 2;   //Escogemos de forma aleatoria quien tiene el turno
