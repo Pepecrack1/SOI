@@ -109,7 +109,7 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     }
     
-    if (sigismember(&pending, SIGUSR1)) {
+    if (sigismember(&pending, SIGUSR1)) { //Comprobamos si SIGUSR1 está en ese conjunto
         printf("Padre| SIGUSR1 está pendiente ");
         mostrarHora();
     } else {

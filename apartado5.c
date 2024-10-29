@@ -29,10 +29,10 @@ int main (int argc, char** argv) {
     // a partir del H[1] vamos añadiendo los hijos
     for (int i=1;i<input;i++) {
         aux = fork();
-        if (aux){
+        if (aux){   //si es el padre, tiene el PID del hijo y lo mete en el array
             H[i] = aux;
         }
-        if (!aux) {
+        if (!aux) {   //si es el hijo, aux==0, mete su PID en el array, e imprime quien es
             H[i] = getpid();
             printf("Soy H[%i] pid: %i\n",i,getpid());
             for(;;);
@@ -48,7 +48,7 @@ int main (int argc, char** argv) {
 static void gestion(int numero_de_senhal) {
     switch (numero_de_senhal) {
 
-    // recorre el vector hasta encontrarse a si mismo y elimina al anterior
+    // recorre el vector hasta encontrarse a si mismo y elimina al anterior con SIGTERM
     case SIGUSR2:
         printf("Señal SIGUSR2 recibida\n");
         for (int i=2;i<input;i++) {
